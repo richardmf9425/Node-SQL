@@ -9,16 +9,16 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
 	console.log('Connected to the flowers database.');
 });
 
-let sql = 'SELECT SPECIES FROM FLOWERS';
+// let sql = 'SELECT SPECIES FROM FLOWERS';
 
-db.all(sql, [], (err, rows) => {
-	if (err) {
-		throw err;
-	}
-	rows.forEach((row) => {
-		console.log(row.SPECIES);
-	});
-});
+// db.all(sql, [], (err, rows) => {
+// 	if (err) {
+// 		throw err;
+// 	}
+// 	rows.forEach((row) => {
+// 		console.log(row.SPECIES);
+// 	});
+// });
 
 // close the database connection
 // db.close();

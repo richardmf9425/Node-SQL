@@ -3,14 +3,23 @@ import axios from 'axios';
 import './App.css';
 
 function App() {
-	const [ flowers, setFlowers ] = useState({});
+	const [ flowers, setFlowers ] = useState([]);
 
-	useEffect(async () => {
-		let data = await axios.get('/api');
-	});
+	useEffect(() => {
+		axios.get('/api').then((res) => setFlowers(res.data.data));
+	}, []);
+
+	const data = flowers.map((flower, index) => (
+		<tr key={index}>
+			<td>{flower.SPECIES}</td>
+		</tr>
+	));
+	console.log(flowers);
 	return (
 		<div>
-			<h1>test</h1>
+			<table>
+				<tbody>{data}</tbody>
+			</table>
 		</div>
 	);
 }
