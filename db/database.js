@@ -21,6 +21,6 @@ db.all(sql, [], (err, rows) => {
 });
 
 // close the database connection
-db.close();
+// db.close();
 
 module.exports = db;
