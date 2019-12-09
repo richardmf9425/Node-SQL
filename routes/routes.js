@@ -26,7 +26,7 @@ router.get('/', async (req, res) => {
 router.get('/sightings/:name', async (req, res) => {
 	let sql = `SELECT PERSON, LOCATION, SIGHTED FROM SIGHTINGS WHERE NAME = ? ORDER BY SIGHTED DESC LIMIT 10`;
 	let params = req.params.name;
-	console.log('name in backend: ' + params);
+
 	try {
 		db.all(sql, params, (err, rows) => {
 			if (err) {

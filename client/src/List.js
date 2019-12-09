@@ -5,19 +5,30 @@ function List({ flowers }) {
 	const [ show, setShow ] = useState(false);
 	const [ flowerModal, setFlowerModal ] = useState({});
 	const [ sightings, setSightings ] = useState([]);
-	const handleShow = (flower) => {
+	const handleShow = async (flower) => {
 		setShow(true);
-		axios.get(`/api/sightings/${flower.COMNAME}`).then((res) => setSightings(res.data));
+		await axios.get(`/api/sightings/${flower.COMNAME}`).then((res) => setSightings(res.data.data));
 		setFlowerModal(flower);
 	};
 	const handleClose = () => setShow(false);
-	console.log(sightings);
+
 	const flowersList = flowers.map((flower, index) => (
 		<tr key={index} onClick={() => handleShow(flower)}>
 			<td>{flower.COMNAME}</td>
 		</tr>
 	));
-	console.log(flowers);
+
+	const sightingsList = sightings.map((sighting, index) => {
+		return (
+			<tr key={index}>
+				<td>{sighting.PERSON}</td>
+				<col />
+				<td>{sighting.LOCATION}</td>
+				<col />
+				<td>{sighting.SIGHTED}</td>
+			</tr>
+		);
+	});
 	return (
 		<Fragment>
 			<div className="landing-section">
@@ -29,7 +40,9 @@ function List({ flowers }) {
 									<h1>Flowers</h1>
 									<table className="table table-striped">
 										<thead>
-											<td>Common Name:</td>
+											<tr>
+												<th>Common Name:</th>
+											</tr>
 										</thead>
 										<tbody>{flowersList}</tbody>
 									</table>
@@ -47,10 +60,15 @@ function List({ flowers }) {
 				<Modal.Body>
 					<table>
 						<thead>
-							<td>Person:</td>
-							<td>Location:</td>
-							<td>Date :</td>
+							<tr>
+								<th>Person:</th>
+								<col />
+								<th>Location:</th>
+								<col />
+								<th>Date :</th>
+							</tr>
 						</thead>
+						<tbody>{sightingsList}</tbody>
 					</table>
 				</Modal.Body>
 			</Modal>
