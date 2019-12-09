@@ -29,6 +29,9 @@ function List({ flowers }) {
 			</tr>
 		);
 	});
+	const onSubmit = (e) => {
+		e.preventDefault();
+	};
 	return (
 		<Fragment>
 			<div className="landing-section">
@@ -71,6 +74,14 @@ function List({ flowers }) {
 						<tbody>{sightingsList}</tbody>
 					</table>
 				</Modal.Body>
+				<Modal.Footer>
+					<form onSubmit={(e) => onSubmit(e)}>
+						<input type="text" placeholder="Person" />
+						<input type="text" placeholder="Location" />
+						<input type="text" placeholder="Date" />
+						<button type="submit">Add</button>
+					</form>
+				</Modal.Footer>
 			</Modal>
 		</Fragment>
 	);

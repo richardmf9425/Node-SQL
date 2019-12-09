@@ -44,4 +44,40 @@ router.get('/sightings/:name', async (req, res) => {
 	}
 });
 
+// Add sightings for a flower
+router.post('/sightings/add', async (req, res) => {
+	let errors = [];
+	console.log(req);
+	if (!req.body.name) errors.push('No name specified');
+	if (!req.body.person) errors.push('No person specified');
+	if (!req.body.location) errors.push('No location specified');
+	if (!req.body.sighted) errors.push('No sighting date specified');
+	if (errors.length) {
+		res.status(400).json({ error: errors.join(',') });
+		return;
+	}
+	let data = {
+		name: req.body.name,
+		person: req.body.person,
+		location: req.body.location,
+		sighted: req.body.sighted
+	};
+	let sql = `INSERT INTO SIGHTINGS (NAME, PERSON, LOCATION, SIGHTED) VALUES (?,?,?,?)`;
+	let params = [ data.name, data.person, data.location, data.sighted ];
+	try {
+		db.run(sql, params, (err, result) => {
+			if (err) {
+				res.status(400).json({ error: err.message });
+				return;
+			}
+			res.json({
+				message: 'success',
+				data: data
+			});
+		});
+	} catch (e) {
+		console.error(e.message);
+		res.status(500).send('Server error');
+	}
+});
 module.exports = router;
