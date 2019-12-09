@@ -11,7 +11,7 @@ function App() {
 
 	const data = flowers.map((flower, index) => (
 		<tr key={index}>
-			<td>{flower.SPECIES}</td>
+			<td>{flower.COMNAME}</td>
 		</tr>
 	));
 	console.log(flowers);

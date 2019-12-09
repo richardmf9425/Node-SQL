@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../db/database');
 
 router.get('/', async (req, res) => {
-	let sql = `SELECT SPECIES FROM FLOWERS`;
+	let sql = `SELECT COMNAME FROM FLOWERS`;
 	let params = [];
 	try {
 		db.all(sql, params, (err, rows) => {
