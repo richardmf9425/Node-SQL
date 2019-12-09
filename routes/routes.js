@@ -22,4 +22,8 @@ router.get('/', async (req, res) => {
 	}
 });
 
+router.get('/sightings/:id', async (req, res) => {
+	let sql = `SELECT PERSON, LOCATION, SIGHTED FROM SIGHTINGS WHERE NAME = ? LIMIT 10`;
+});
+
 module.exports = router;

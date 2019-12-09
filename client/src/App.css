@@ -1,1 +1,39 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Roboto, Arial, sans-serif;
+}
 
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
+
+.flowers-table {
+  margin-top: 5%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.tableWrapper {
+
+  padding-left: 4rem;
+  padding-right: 4rem;
+}
+
+td {
+  width: 500px;
+}
+
+td:hover {
+  position: left;
+  cursor: pointer;
+  background-color: #084b81;
+  color: #fff;
+}
