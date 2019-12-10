@@ -6,10 +6,12 @@ import 'react-toastify/dist/ReactToastify.css';
 toast.configure();
 function List() {
 	const [ flowers, setFlowers ] = useState([]);
+	const [ update, setUpdate ] = useState({
+		comname: '',
+		species: '',
+		genus: ''
+	});
 
-	useEffect(() => {
-		axios.get('/api').then((res) => setFlowers(res.data.data));
-	}, []);
 	const [ show, setShow ] = useState(false);
 	const [ flowerModal, setFlowerModal ] = useState({});
 	const [ sightings, setSightings ] = useState([]);
@@ -18,11 +20,9 @@ function List() {
 		location: '',
 		date: ''
 	});
-	const [ update, setUpdate ] = useState({
-		comname: '',
-		species: '',
-		genus: ''
-	});
+	useEffect(() => {
+		axios.get('/api').then((res) => setFlowers(res.data.data));
+	}, []);
 
 	const handleShow = async (flower) => {
 		setShow(true);
@@ -85,6 +85,7 @@ function List() {
 			pauseOnHover: false,
 			draggable: true
 		});
+		await axios.get('/api').then((res) => setFlowers(res.data.data));
 		handleClose();
 	};
 
@@ -116,11 +117,31 @@ function List() {
 				<Modal.Header closeButton>
 					<Modal.Title>
 						{' '}
-						<form onSubmit={(e) => handleUpdate(e)}>
-							Common Name: <input value={comname} name="comname" onChange={(e) => onUpdateChange(e)} />
-							Species: <input value={species} name="species" onChange={(e) => onUpdateChange(e)} />
-							Genus: <input value={genus} name="genus" onChange={(e) => onUpdateChange(e)} />
-							<button type="submit">Update</button>
+						<form onSubmit={(e) => handleUpdate(e)} className="update-form">
+							<strong>Common Name:</strong> {' '}
+							<input
+								className="update-input"
+								value={comname}
+								name="comname"
+								onChange={(e) => onUpdateChange(e)}
+							/>
+							<strong>Species:</strong> {' '}
+							<input
+								className="update-input"
+								value={species}
+								name="species"
+								onChange={(e) => onUpdateChange(e)}
+							/>
+							<strong>Genus:</strong>
+							<input
+								className="update-input"
+								value={genus}
+								name="genus"
+								onChange={(e) => onUpdateChange(e)}
+							/>
+							<button className="add-button" type="submit">
+								Update
+							</button>
 						</form>
 					</Modal.Title>
 				</Modal.Header>
@@ -146,6 +167,7 @@ function List() {
 								name="person"
 								value={person}
 								placeholder="Person"
+								className="text-input"
 								required
 								onChange={(e) => onChange(e)}
 							/>
@@ -154,12 +176,14 @@ function List() {
 								name="location"
 								value={location}
 								placeholder="Location"
+								className="text-input"
 								required
 								onChange={(e) => onChange(e)}
 							/>
 							<input
 								type="text"
 								required
+								className="text-input"
 								name="date"
 								value={date}
 								placeholder="Date"

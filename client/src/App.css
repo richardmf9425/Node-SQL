@@ -5,8 +5,6 @@
   font-family: Roboto, Arial, sans-serif;
 }
 
-
-
 input:focus,
 select:focus,
 textarea:focus,
@@ -20,11 +18,9 @@ button:focus {
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
 .tableWrapper {
-
   padding-left: 4rem;
   padding-right: 4rem;
 }
@@ -40,24 +36,43 @@ td {
   color: #fff;
 }
 
-
+.tableWrapper h1 {
+  padding-top: 20px;
+}
 
 /* Modal  */
+.update-form {
+  margin-left: 80px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  font-size: 1.2rem;
+}
+
+
+
+.update-input {
+  width: 80%;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  border: none;
+  border-bottom: 1px solid rgb(3, 142, 255);
+}
 
 .form-input {
   display: inline;
 
   position: relative;
   margin-left: -25px;
-
 }
 
-.form-input input {
+.form-input .text-input {
   width: 100px;
   border: none;
   border-bottom: 1px solid rgb(3, 142, 255);
   margin: 5px 30px 15px 30px;
-
 }
 
 .add-button {
@@ -67,6 +82,7 @@ td {
   background-color: rgb(3, 142, 255);
   border-radius: 5px;
   color: white;
+  font-size: 1rem;
 }
 
 .add-button:hover {
@@ -78,5 +94,4 @@ td {
   position: relative;
   background-color: rgb(0, 111, 202);
   padding-top: 30px;
-
 }
