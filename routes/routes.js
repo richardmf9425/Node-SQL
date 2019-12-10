@@ -47,7 +47,7 @@ router.get('/sightings/:name', async (req, res) => {
 // Add sightings for a flower
 router.post('/sightings/add', async (req, res) => {
 	let errors = [];
-	console.log(req);
+	console.log(req.body);
 	if (!req.body.name) errors.push('No name specified');
 	if (!req.body.person) errors.push('No person specified');
 	if (!req.body.location) errors.push('No location specified');

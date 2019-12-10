@@ -5,6 +5,11 @@ function List({ flowers }) {
 	const [ show, setShow ] = useState(false);
 	const [ flowerModal, setFlowerModal ] = useState({});
 	const [ sightings, setSightings ] = useState([]);
+	const [ formInfo, setFormInfo ] = useState({
+		person: '',
+		location: '',
+		date: ''
+	});
 	const handleShow = async (flower) => {
 		setShow(true);
 		await axios.get(`/api/sightings/${flower.COMNAME}`).then((res) => setSightings(res.data.data));
@@ -29,8 +34,16 @@ function List({ flowers }) {
 			</tr>
 		);
 	});
-	const onSubmit = (e) => {
+	const { person, location, date } = formInfo;
+	const onChange = (e) => setFormInfo({ ...formInfo, [e.target.name]: e.target.value });
+	const onSubmit = async (e) => {
 		e.preventDefault();
+		await axios.post('/api/sightings/add', { name: flowerModal.COMNAME, person, location, sighted: date });
+		setFormInfo({
+			person: '',
+			location: '',
+			date: ''
+		});
 	};
 	return (
 		<Fragment>
@@ -76,9 +89,30 @@ function List({ flowers }) {
 				</Modal.Body>
 				<Modal.Footer>
 					<form onSubmit={(e) => onSubmit(e)}>
-						<input type="text" placeholder="Person" />
-						<input type="text" placeholder="Location" />
-						<input type="text" placeholder="Date" />
+						<input
+							type="text"
+							name="person"
+							value={person}
+							placeholder="Person"
+							required
+							onChange={(e) => onChange(e)}
+						/>
+						<input
+							type="text"
+							name="location"
+							value={location}
+							placeholder="Location"
+							required
+							onChange={(e) => onChange(e)}
+						/>
+						<input
+							type="text"
+							required
+							name="date"
+							value={date}
+							placeholder="Date"
+							onChange={(e) => onChange(e)}
+						/>
 						<button type="submit">Add</button>
 					</form>
 				</Modal.Footer>
