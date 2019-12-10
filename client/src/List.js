@@ -1,6 +1,9 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+toast.configure();
 function List({ flowers }) {
 	const [ show, setShow ] = useState(false);
 	const [ flowerModal, setFlowerModal ] = useState({});
@@ -44,6 +47,16 @@ function List({ flowers }) {
 			location: '',
 			date: ''
 		});
+		toast.info('Sighting was successfully added.', {
+			bodyClassName: 'toast-background',
+			position: 'top-center',
+			autoClose: 3000,
+			hideProgressBar: true,
+			closeOnClick: true,
+			pauseOnHover: false,
+			draggable: true
+		});
+		handleClose();
 	};
 	return (
 		<Fragment>
@@ -74,7 +87,7 @@ function List({ flowers }) {
 					<Modal.Title>Flower: {flowerModal.COMNAME}</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<table>
+					<table className="table table-striped">
 						<thead>
 							<tr>
 								<th>Person:</th>
@@ -89,31 +102,35 @@ function List({ flowers }) {
 				</Modal.Body>
 				<Modal.Footer>
 					<form onSubmit={(e) => onSubmit(e)}>
-						<input
-							type="text"
-							name="person"
-							value={person}
-							placeholder="Person"
-							required
-							onChange={(e) => onChange(e)}
-						/>
-						<input
-							type="text"
-							name="location"
-							value={location}
-							placeholder="Location"
-							required
-							onChange={(e) => onChange(e)}
-						/>
-						<input
-							type="text"
-							required
-							name="date"
-							value={date}
-							placeholder="Date"
-							onChange={(e) => onChange(e)}
-						/>
-						<button type="submit">Add</button>
+						<div className="form-input">
+							<input
+								type="text"
+								name="person"
+								value={person}
+								placeholder="Person"
+								required
+								onChange={(e) => onChange(e)}
+							/>
+							<input
+								type="text"
+								name="location"
+								value={location}
+								placeholder="Location"
+								required
+								onChange={(e) => onChange(e)}
+							/>
+							<input
+								type="text"
+								required
+								name="date"
+								value={date}
+								placeholder="Date"
+								onChange={(e) => onChange(e)}
+							/>
+						</div>
+						<button type="submit" className="add-button">
+							Add
+						</button>
 					</form>
 				</Modal.Footer>
 			</Modal>

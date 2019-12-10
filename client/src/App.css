@@ -31,9 +31,43 @@ td {
   width: 500px;
 }
 
-td:hover {
+.tableWrapper td:hover {
   position: left;
   cursor: pointer;
-  background-color: #084b81;
+  background-color: rgb(3, 142, 255);
   color: #fff;
+}
+
+
+
+/* Modal  */
+
+.form-input {
+  display: inline;
+
+  position: relative;
+  margin-left: -25px;
+
+}
+
+.form-input input {
+  width: 100px;
+  border: none;
+  border-bottom: 1px solid rgb(3, 142, 255);
+  margin: 5px 27px 15px 27px;
+
+}
+
+.add-button {
+  margin: 10px;
+  width: 70px;
+  height: 35px;
+  background-color: rgb(3, 142, 255);
+  border-radius: 5px;
+  color: white;
+}
+
+.add-button:hover {
+  background-color: rgb(0, 111, 202);
+  transform: scale(1.06);
 }
