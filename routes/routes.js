@@ -89,12 +89,13 @@ router.patch('/flowers/:name', (req, res) => {
 		species: req.body.species,
 		comname: req.body.comname
 	};
+
 	db.run(
 		`UPDATE flowers SET
             GENUS = COALESCE(?, GENUS),
             SPECIES = COALESCE(?, SPECIES),
             COMNAME = COALESCE(?, COMNAME)
-            WHERE COMNAME = ?`,
+			WHERE COMNAME = ?`,
 		[ data.genus, data.species, data.comname, req.params.name ],
 		function(err, results) {
 			if (err) {
