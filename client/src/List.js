@@ -4,7 +4,12 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 toast.configure();
-function List({ flowers }) {
+function List() {
+	const [ flowers, setFlowers ] = useState([]);
+
+	useEffect(() => {
+		axios.get('/api').then((res) => setFlowers(res.data.data));
+	}, []);
 	const [ show, setShow ] = useState(false);
 	const [ flowerModal, setFlowerModal ] = useState({});
 	const [ sightings, setSightings ] = useState([]);
@@ -13,11 +18,18 @@ function List({ flowers }) {
 		location: '',
 		date: ''
 	});
+	const [ update, setUpdate ] = useState({
+		comname: '',
+		species: '',
+		genus: ''
+	});
 
 	const handleShow = async (flower) => {
 		setShow(true);
 		await axios.get(`/api/sightings/${flower.COMNAME}`).then((res) => setSightings(res.data.data));
-		setFlowerModal(flower);
+		console.log(flowers);
+		await setFlowerModal(flower);
+		setUpdate({ ...update, comname: flower.COMNAME, species: flower.SPECIES, genus: flower.GENUS });
 	};
 	const handleClose = () => setShow(false);
 
@@ -59,6 +71,22 @@ function List({ flowers }) {
 		});
 		handleClose();
 	};
+	const { comname, species, genus } = update;
+	const onUpdateChange = (e) => setUpdate({ ...update, [e.target.name]: e.target.value });
+	const handleUpdate = async (e) => {
+		e.preventDefault();
+		await axios.patch(`/api/flowers/${flowerModal.COMNAME}`, { comname, species, genus });
+		toast.info('Flower information succesfully changed.', {
+			bodyClassName: 'toast-background',
+			position: 'top-center',
+			autoClose: 3000,
+			hideProgressBar: true,
+			closeOnClick: true,
+			pauseOnHover: false,
+			draggable: true
+		});
+		handleClose();
+	};
 
 	return (
 		<Fragment>
@@ -86,7 +114,15 @@ function List({ flowers }) {
 
 			<Modal show={show} onHide={handleClose}>
 				<Modal.Header closeButton>
-					<Modal.Title>Flower: {flowerModal.COMNAME}</Modal.Title>
+					<Modal.Title>
+						{' '}
+						<form onSubmit={(e) => handleUpdate(e)}>
+							Common Name: <input value={comname} name="comname" onChange={(e) => onUpdateChange(e)} />
+							Species: <input value={species} name="species" onChange={(e) => onUpdateChange(e)} />
+							Genus: <input value={genus} name="genus" onChange={(e) => onUpdateChange(e)} />
+							<button type="submit">Update</button>
+						</form>
+					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<table className="table table-striped">

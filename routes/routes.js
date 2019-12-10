@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../db/database');
 
 router.get('/', async (req, res) => {
-	let sql = `SELECT COMNAME FROM FLOWERS`;
+	let sql = `SELECT COMNAME, SPECIES, GENUS FROM FLOWERS`;
 	let params = [];
 	try {
 		db.all(sql, params, (err, rows) => {
@@ -80,4 +80,34 @@ router.post('/sightings/add', async (req, res) => {
 		res.status(500).send('Server error');
 	}
 });
+
+// Update flower information
+router.patch('/flowers/:name', (req, res) => {
+	console.log(req.body);
+	var data = {
+		genus: req.body.genus,
+		species: req.body.species,
+		comname: req.body.comname
+	};
+	db.run(
+		`UPDATE flowers SET
+            GENUS = COALESCE(?, GENUS),
+            SPECIES = COALESCE(?, SPECIES),
+            COMNAME = COALESCE(?, COMNAME)
+            WHERE COMNAME = ?`,
+		[ data.genus, data.species, data.comname, req.params.name ],
+		function(err, results) {
+			if (err) {
+				res.status(400).json({ error: err.message });
+				return;
+			}
+			res.json({
+				message: 'success',
+				data: data,
+				changes: this.changes
+			});
+		}
+	);
+});
+
 module.exports = router;
