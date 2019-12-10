@@ -13,6 +13,7 @@ function List({ flowers }) {
 		location: '',
 		date: ''
 	});
+
 	const handleShow = async (flower) => {
 		setShow(true);
 		await axios.get(`/api/sightings/${flower.COMNAME}`).then((res) => setSightings(res.data.data));
@@ -20,7 +21,7 @@ function List({ flowers }) {
 	};
 	const handleClose = () => setShow(false);
 
-	const flowersList = flowers.map((flower, index) => (
+	let flowersList = flowers.map((flower, index) => (
 		<tr key={index} onClick={() => handleShow(flower)}>
 			<td>{flower.COMNAME}</td>
 		</tr>
@@ -58,6 +59,7 @@ function List({ flowers }) {
 		});
 		handleClose();
 	};
+
 	return (
 		<Fragment>
 			<div className="landing-section">
