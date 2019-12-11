@@ -75,6 +75,18 @@ function List() {
 	const onUpdateChange = (e) => setUpdate({ ...update, [e.target.name]: e.target.value });
 	const handleUpdate = async (e) => {
 		e.preventDefault();
+		if (comname === flowerModal.COMNAME && species === flowerModal.SPECIES && genus === flowerModal.GENUS) {
+			return toast.error('Fields are the same! Please make a change to update', {
+				bodyClassName: 'toast-background',
+				position: 'top-center',
+				autoClose: 3000,
+				hideProgressBar: true,
+				closeOnClick: true,
+				pauseOnHover: false,
+				draggable: true
+			});
+		}
+
 		axios.patch(`/api/flowers/${flowerModal.COMNAME}`, { comname, species, genus });
 		toast.info('Flower information succesfully changed.', {
 			bodyClassName: 'toast-background',
