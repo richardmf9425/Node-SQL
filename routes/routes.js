@@ -95,19 +95,15 @@ router.patch('/flowers/:name', (req, res) => {
             GENUS = COALESCE(?, GENUS),
             SPECIES = COALESCE(?, SPECIES),
             COMNAME = COALESCE(?, COMNAME)
-			WHERE COMNAME = ?`,
-		[ data.genus, data.species, data.comname, req.params.name ],
-		function(err, results) {
-			if (err) {
-				res.status(400).json({ error: err.message });
-				return;
-			}
-			res.json({
-				message: 'success',
-				data: data,
-				changes: this.changes
-			});
-		}
+			WHERE COMNAME = ?;
+			UPDATE sightings SET`,
+		[ data.genus, data.species, data.comname, req.params.name ]
+	);
+	db.run(
+		`UPDATE sightings SET
+	NAME = ?
+	WHERE NAME = ?`,
+		[ data.comname, req.params.name ]
 	);
 });
 
