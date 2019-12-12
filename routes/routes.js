@@ -99,6 +99,7 @@ router.patch('/flowers/:name', (req, res) => {
 			UPDATE sightings SET`,
 		[ data.genus, data.species, data.comname, req.params.name ]
 	);
+	//Update flower name in sightings table
 	db.run(
 		`UPDATE sightings SET
 	NAME = ?
